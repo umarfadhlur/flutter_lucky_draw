@@ -58,7 +58,11 @@ class LuckyDrawPageState extends State<LuckyDrawPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Lucky Draw')),
+      appBar: AppBar(
+        title: const Text('Lucky Draw'),
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+      ),
       body: Center(
         child: _participants.isEmpty
             ? const CircularProgressIndicator()
@@ -80,7 +84,8 @@ class LuckyDrawPageState extends State<LuckyDrawPage> {
                           participant,
                           style: const TextStyle(
                             color: KansaiColors.white,
-                            fontSize: 10,
+                            fontSize: 8,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
