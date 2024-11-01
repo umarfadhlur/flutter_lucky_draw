@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
-import 'package:flutter_lucky_draw/utils/kansai_color.dart';
+import 'package:flutter_lucky_draw/utils/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LuckyDrawPage extends StatefulWidget {

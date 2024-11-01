@@ -15,9 +15,6 @@ class PrizeCategoryPageState extends State<PrizeCategoryPage> {
   List<String> prizeCategories = [
     'Mesin Cuci Aqua 10KG Top Load',
     'AC Sharp Inverter 1/2 PK',
-    'Honda PCX 160',
-    'Yamaha Fazzio New Hybrid',
-    'Suzuki Address Predator'
   ];
   List<String> participants = [];
 

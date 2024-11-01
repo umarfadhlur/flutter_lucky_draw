@@ -3,6 +3,7 @@ import 'package:flutter_lucky_draw/screens/participant_init_page.dart';
 import 'package:flutter_lucky_draw/screens/lucky_draw_page.dart';
 import 'package:flutter_lucky_draw/screens/winner_page.dart';
 import 'package:flutter_lucky_draw/screens/prize_category_page.dart';
+import 'package:flutter_lucky_draw/utils/colors.dart';
 
 void main() {
   runApp(const LuckyDrawApp());
@@ -16,9 +17,9 @@ class LuckyDrawApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Lucky Draw',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: ThemeMode.dark,
       initialRoute: '/',
       routes: {
         '/': (context) => const ParticipantInitPage(),
