@@ -64,55 +64,68 @@ class LuckyDrawPageState extends State<LuckyDrawPage> {
         shadowColor: Colors.transparent,
         actions: [
           Padding(
-            padding: const EdgeInsets.only(
-                right: 16.0), // Optional: Adjust padding as needed
+            padding: const EdgeInsets.only(right: 16.0),
             child: Image.asset(
               'assets/kansai.png',
-              width: 100.0, // Sesuaikan ukuran logo sesuai kebutuhan
+              width: 100.0,
               fit: BoxFit.contain,
             ),
           ),
         ],
       ),
-      body: Center(
-        child: _participants.isEmpty
-            ? const CircularProgressIndicator()
-            : FortuneWheel(
-                animateFirst: false,
-                selected: _controller.stream,
-                items: _participants.asMap().entries.map(
-                  (entry) {
-                    int index = entry.key;
-                    String participant = entry.value;
-                    return FortuneItem(
-                      style: FortuneItemStyle(
-                        color: getColor(index),
-                        borderColor: KansaiColors.navy,
-                      ),
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          participant,
-                          style: const TextStyle(
-                            color: KansaiColors.white,
-                            fontSize: 8,
-                            fontWeight: FontWeight.bold,
+      body: Stack(
+        children: [
+          // Positioned widget to place the image at the top left corner
+          Positioned(
+            top: 16.0,
+            left: 16.0,
+            child: Image.asset(
+              'assets/luckydraw.png', // Adjust the path as necessary
+              width: 300.0, // Adjust the size as needed
+              fit: BoxFit.contain,
+            ),
+          ),
+          Center(
+            child: _participants.isEmpty
+                ? const CircularProgressIndicator()
+                : FortuneWheel(
+                    animateFirst: false,
+                    selected: _controller.stream,
+                    items: _participants.asMap().entries.map(
+                      (entry) {
+                        int index = entry.key;
+                        String participant = entry.value;
+                        return FortuneItem(
+                          style: FortuneItemStyle(
+                            color: getColor(index),
+                            borderColor: KansaiColors.navy,
                           ),
-                        ),
-                      ),
-                    );
-                  },
-                ).toList(),
-                onFling: () => const Duration(milliseconds: 50),
-                onAnimationEnd: () {
-                  if (_winnerIndex != -1) {
-                    _showWinnerPopup(
-                        _participants[_winnerIndex], widget.category);
-                  }
-                  _winnerIndex = -1;
-                },
-                duration: const Duration(seconds: 20),
-              ),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              participant,
+                              style: const TextStyle(
+                                color: KansaiColors.white,
+                                fontSize: 8,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ).toList(),
+                    onFling: () => const Duration(milliseconds: 50),
+                    onAnimationEnd: () {
+                      if (_winnerIndex != -1) {
+                        _showWinnerPopup(
+                            _participants[_winnerIndex], widget.category);
+                      }
+                      _winnerIndex = -1;
+                    },
+                    duration: const Duration(seconds: 20),
+                  ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -160,3 +173,4 @@ class LuckyDrawPageState extends State<LuckyDrawPage> {
     super.dispose();
   }
 }
+  
