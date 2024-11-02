@@ -59,7 +59,7 @@ class LuckyDrawPageState extends State<LuckyDrawPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lucky Draw'),
+        title: const Text('Let\'s Spin!'),
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         actions: [
