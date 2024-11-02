@@ -62,6 +62,17 @@ class LuckyDrawPageState extends State<LuckyDrawPage> {
         title: const Text('Lucky Draw'),
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(
+                right: 16.0), // Optional: Adjust padding as needed
+            child: Image.asset(
+              'assets/kansai.png',
+              width: 100.0, // Sesuaikan ukuran logo sesuai kebutuhan
+              fit: BoxFit.contain,
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: _participants.isEmpty
@@ -92,6 +103,7 @@ class LuckyDrawPageState extends State<LuckyDrawPage> {
                     );
                   },
                 ).toList(),
+                onFling: () => const Duration(milliseconds: 50),
                 onAnimationEnd: () {
                   if (_winnerIndex != -1) {
                     _showWinnerPopup(
@@ -123,8 +135,10 @@ class LuckyDrawPageState extends State<LuckyDrawPage> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(winner),
-              Text(prize),
+              Text(
+                winner,
+                style: const TextStyle(fontSize: 20),
+              ),
             ],
           ),
           actions: [

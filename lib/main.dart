@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_lucky_draw/screens/participant_init_page.dart';
 import 'package:flutter_lucky_draw/screens/lucky_draw_page.dart';
 import 'package:flutter_lucky_draw/screens/winner_page.dart';
@@ -6,6 +7,9 @@ import 'package:flutter_lucky_draw/screens/prize_category_page.dart';
 import 'package:flutter_lucky_draw/utils/colors.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
   runApp(const LuckyDrawApp());
 }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lucky_draw/screens/asset_video_player.dart';
+import 'package:flutter_lucky_draw/screens/lucky_draw_page.dart';
 import 'package:flutter_lucky_draw/screens/participant_init_page.dart';
 import 'package:flutter_lucky_draw/screens/winner_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -63,7 +64,8 @@ class PrizeCategoryPageState extends State<PrizeCategoryPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => AssetVideoPlayerScreen(
+                                  // builder: (context) => AssetVideoPlayerScreen(
+                                  builder: (context) => LuckyDrawPage(
                                     category: prizeCategories[index],
                                   ),
                                 ),
