@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
+import 'package:flutter_lucky_draw/screens/prize_category_page.dart';
 import 'package:flutter_lucky_draw/utils/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,6 +19,7 @@ class LuckyDrawPage extends StatefulWidget {
 
 class LuckyDrawPageState extends State<LuckyDrawPage> {
   List<String> _participants = [];
+  List<Map<String, String>> _winners = [];
   final StreamController<int> _controller = StreamController<int>();
   int _winnerIndex = -1;
 
@@ -24,6 +27,7 @@ class LuckyDrawPageState extends State<LuckyDrawPage> {
   void initState() {
     super.initState();
     _loadParticipants();
+    _loadWinners();
   }
 
   Future<void> _loadParticipants() async {
@@ -39,6 +43,44 @@ class LuckyDrawPageState extends State<LuckyDrawPage> {
       if (kDebugMode) {
         print("Error loading participants: $e");
       }
+    }
+  }
+
+  Future<void> _loadWinners() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? storedWinners = prefs.getStringList('winners');
+    if (storedWinners != null) {
+      setState(() {
+        _winners = storedWinners
+            .map((winnerString) =>
+                Map<String, String>.from(jsonDecode(winnerString)))
+            .toList();
+      });
+    }
+  }
+
+  Future<void> _saveWinners() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> winnersStrings =
+        _winners.map((winner) => jsonEncode(winner)).toList();
+    await prefs.setStringList('winners', winnersStrings);
+  }
+
+  Future<void> _saveParticipants() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('participants', _participants);
+  }
+
+  void _removeParticipant() {
+    if (_winnerIndex != -1 && _participants.isNotEmpty) {
+      String winner = _participants[_winnerIndex];
+      setState(() {
+        _participants.removeAt(_winnerIndex);
+        _winners.add({'winner': winner, 'prize': widget.category});
+        _saveWinners();
+        _saveParticipants();
+      });
+      _winnerIndex = -1;
     }
   }
 
@@ -62,6 +104,18 @@ class LuckyDrawPageState extends State<LuckyDrawPage> {
         title: const Text('Let\'s Spin!'),
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const PrizeCategoryPage(),
+              ),
+              (Route<dynamic> route) => false,
+            );
+          },
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
@@ -75,15 +129,6 @@ class LuckyDrawPageState extends State<LuckyDrawPage> {
       ),
       body: Stack(
         children: [
-          Positioned(
-            top: 16.0,
-            left: 16.0,
-            child: Image.asset(
-              'assets/luckydraw.png',
-              width: 300.0, 
-              fit: BoxFit.contain,
-            ),
-          ),
           Center(
             child: _participants.isEmpty
                 ? const CircularProgressIndicator()
@@ -118,8 +163,8 @@ class LuckyDrawPageState extends State<LuckyDrawPage> {
                       if (_winnerIndex != -1) {
                         _showWinnerPopup(
                             _participants[_winnerIndex], widget.category);
+                        _removeParticipant();
                       }
-                      _winnerIndex = -1;
                     },
                     duration: const Duration(seconds: 20),
                   ),
@@ -172,4 +217,3 @@ class LuckyDrawPageState extends State<LuckyDrawPage> {
     super.dispose();
   }
 }
-  
