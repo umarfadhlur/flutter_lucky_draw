@@ -64,7 +64,6 @@ class PrizeCategoryPageState extends State<PrizeCategoryPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  // builder: (context) => AssetVideoPlayerScreen(
                                   builder: (context) => LuckyDrawPage(
                                     category: prizeCategories[index],
                                   ),
@@ -86,7 +85,7 @@ class PrizeCategoryPageState extends State<PrizeCategoryPage> {
                           ),
                         );
                       }
-                    : null, // Tidak aktif jika tidak ada peserta
+                    : null,
                 child: const Text('Riwayat Pemenang'),
               ),
             ],

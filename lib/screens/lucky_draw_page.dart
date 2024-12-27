@@ -75,13 +75,12 @@ class LuckyDrawPageState extends State<LuckyDrawPage> {
       ),
       body: Stack(
         children: [
-          // Positioned widget to place the image at the top left corner
           Positioned(
             top: 16.0,
             left: 16.0,
             child: Image.asset(
-              'assets/luckydraw.png', // Adjust the path as necessary
-              width: 300.0, // Adjust the size as needed
+              'assets/luckydraw.png',
+              width: 300.0, 
               fit: BoxFit.contain,
             ),
           ),

@@ -13,7 +13,6 @@ class ParticipantInitPageState extends State<ParticipantInitPage> {
   final TextEditingController _participantController = TextEditingController();
 
   int get _participantCount {
-    // Hitung setiap baris yang tidak kosong sebagai peserta individu
     return _participantController.text
         .trim()
         .split('\n')
@@ -22,7 +21,6 @@ class ParticipantInitPageState extends State<ParticipantInitPage> {
   }
 
   Future<void> _startDraw() async {
-    // Pisahkan input menjadi daftar peserta
     List<String> participants = _participantController.text
         .trim()
         .split('\n')
@@ -32,10 +30,8 @@ class ParticipantInitPageState extends State<ParticipantInitPage> {
     if (participants.isNotEmpty) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      // Simpan daftar peserta
       await prefs.setStringList('participants', participants);
 
-      // Lanjutkan ke halaman berikutnya
       _navigateToNextPage();
     }
   }
@@ -65,9 +61,8 @@ class ParticipantInitPageState extends State<ParticipantInitPage> {
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.multiline,
-                maxLines: null, // Izinkan input multi-baris
-                onChanged: (_) => setState(
-                    () {}), // Update jumlah peserta setiap perubahan teks
+                maxLines: null,
+                onChanged: (_) => setState(() {}),
               ),
             ),
             const SizedBox(height: 10),
@@ -76,7 +71,7 @@ class ParticipantInitPageState extends State<ParticipantInitPage> {
             ElevatedButton(
               onPressed: _participantCount > 0
                   ? _startDraw
-                  : null, // Nonaktifkan jika tidak ada peserta
+                  : null,
               child: const Text('Mulai Undian'),
             ),
           ],
